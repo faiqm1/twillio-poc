@@ -14,12 +14,14 @@ export class HomePage {
   roomName: string;
   accessToken: string;
   room: Video.Room;
+  tracks: any;
   constructor(private twilioService: TwillioService) {}
   ngOnInit() {
     this.addLocalVideo();
   }
   async addLocalVideo() {
-    const videoTrack = await Video.createLocalVideoTrack();
+    this.tracks = await Video.createLocalTracks();
+    const videoTrack = this.tracks.find((track) => track.kind === 'video');
     console.log('video track', videoTrack);
     const trackElement = videoTrack.attach();
     document.getElementById('localParticipant').appendChild(trackElement);
@@ -67,8 +69,7 @@ export class HomePage {
   async connectToRoom() {
     let options = {
       name: this.roomName,
-      audio: true,
-      video: true,
+      tracks: this.tracks,
     };
 
     await Video.connect(this.accessToken, options).then(
@@ -83,7 +84,6 @@ export class HomePage {
         console.error(`Unable to connect to Room: ${error.message}`);
       }
     );
-    this.addLocalVideo();
     const localParticipant = this.room.localParticipant;
     console.log(
       `Connected to the Room as LocalParticipant "${localParticipant.identity}"`
