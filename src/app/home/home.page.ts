@@ -63,28 +63,14 @@ export class HomePage {
       }
     });
   }
-  end() {
-    console.log('click on end');
-    this.room.on('disconnected', (room) => {
-      // Detach the local media elements
-      room.localParticipant.tracks.forEach((publication) => {
-        const track = publication.track;
-        if (track.kind === 'video') {
-          document.getElementById('remoteParticipant').innerHTML = '';
-          // const attachedElements = publication.track.detach();
-          // attachedElements.forEach((element) => element.remove());
-        }
-      });
-    });
-    // To disconnect from a Room
-    this.room.disconnect();
-  }
+
   async connectToRoom() {
     let options = {
       name: this.roomName,
       audio: true,
       video: true,
     };
+
     await Video.connect(this.accessToken, options).then(
       (room) => {
         console.log(`Successfully joined a Room: ${room}`);
@@ -97,6 +83,7 @@ export class HomePage {
         console.error(`Unable to connect to Room: ${error.message}`);
       }
     );
+    this.addLocalVideo();
     const localParticipant = this.room.localParticipant;
     console.log(
       `Connected to the Room as LocalParticipant "${localParticipant.identity}"`
@@ -115,5 +102,24 @@ export class HomePage {
       this.remoteUserName = participant.identity;
       this.connectParticipants(participant);
     });
+  }
+
+  // end call function
+
+  end() {
+    console.log('click on end');
+    this.room.on('disconnected', (room) => {
+      // Detach the local media elements
+      room.localParticipant.tracks.forEach((publication) => {
+        const track = publication.track;
+        if (track.kind === 'video') {
+          document.getElementById('remoteParticipant').innerHTML = '';
+          // const attachedElements = publication.track.detach();
+          // attachedElements.forEach((element) => element.remove());
+        }
+      });
+    });
+    // To disconnect from a Room
+    this.room.disconnect();
   }
 }
