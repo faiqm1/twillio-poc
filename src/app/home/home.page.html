@@ -1,37 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Video Call
+      Call App
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div id='participants'>
-
-    <div id='localParticipant' class='participant'>
-      <div class='identity' id='localIdentity'>{{username}}</div>
-    </div>
-
-    <div id='remoteParticipant' class='participant'>
-      <div class='identity' id='remoteIdentity'>{{remoteUserName}}</div>
-    </div>
-
-  </div>
-
-
-
 
   <div id='login'>
-    <input id='username' type='text' [(ngModel)]="username" placeholder='Enter your name...' required>
-    <input id='username' type='text' [(ngModel)]="roomName" placeholder='Enter your room name...' required>
 
-    <button type="button" value="connect" (click)="call()">Call</button>
-    <button type="button" value="connect" (click)="end()">End</button>
-
-
-
-
+    Enjoy your free Calls!!!
+    <br>
+    <br>
+    <button type="button" value="connect" (click)="audioCall()">Audio Call</button>
+    <br>
+    <br>
+    <button type="button" value="connect" (click)="videoCall()">Video Call</button>
   </div>
 
 
