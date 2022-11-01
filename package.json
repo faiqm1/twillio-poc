@@ -8,6 +8,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:ios": "ionic build && npx cap sync ios && npx cap copy ios && npx cap open ios",
+    "build:android": "ionic build && npx cap sync android && npx cap copy android && npx cap open android",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -29,11 +30,13 @@
     "@capacitor/status-bar": "4.0.1",
     "@ionic/angular": "^6.1.9",
     "@types/twilio-video": "^2.11.0",
+    "cordova-plugin-audiotoggle": "^1.0.3",
     "ionicons": "^6.0.3",
-    "rxjs": "~6.6.0",
+    "rxjs": "^6.6.0",
     "tslib": "^2.2.0",
     "twilio": "^3.82.2",
     "twilio-video": "^2.24.3",
+    "types": "^0.1.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
