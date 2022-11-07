@@ -91,6 +91,12 @@ export class VideoCallPage implements OnInit {
       this.remoteUserName = participant.identity;
       this.connectParticipants(participant);
     });
+
+    this.room.on('participantDisconnected', (participant) => {
+      console.log(`Participant "${participant.identity}" disconnected`);
+
+      this.end();
+    });
   }
 
   /**

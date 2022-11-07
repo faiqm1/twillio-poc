@@ -9,8 +9,9 @@ import { TwillioService } from '../../../services/twillio.service';
 })
 export class AudioCallPage implements OnInit {
   username: string;
-  remoteUserName: string;
+
   roomName: string;
+  remoteUserName: string;
   accessToken: string;
   room: Video.Room;
   tracks: any;
@@ -83,6 +84,12 @@ export class AudioCallPage implements OnInit {
       this.remoteUserName = participant.identity;
       this.connectParticipants(participant);
     });
+
+    this.room.on('participantDisconnected', (participant) => {
+      console.log(`Participant "${participant.identity}" disconnected`);
+
+      this.end();
+    });
   }
 
   /**
@@ -110,7 +117,7 @@ export class AudioCallPage implements OnInit {
    */
   end() {
     localStorage.removeItem('token');
-    this.nav.navigateBack('home');
+
     this.room.on('disconnected', (room) => {
       // Detach the local media elements
       room.localParticipant.tracks.forEach((publication) => {
@@ -122,5 +129,6 @@ export class AudioCallPage implements OnInit {
     });
     // To disconnect from a Room
     this.room.disconnect();
+    this.nav.navigateBack('home');
   }
 }
